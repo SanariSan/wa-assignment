@@ -23,12 +23,6 @@ const uiSlice = createSlice({
     setPathnameUi(state, action: { payload: Location['pathname'] }) {
       state.pathname = action.payload;
     },
-    setIsCartOpenedUi(state, action: { payload: { isOpened: boolean | 'toggle' } }) {
-      state.isCartOpened =
-        typeof action.payload.isOpened === 'boolean'
-          ? action.payload.isOpened
-          : !state.isCartOpened;
-    },
     setIsSidebarOpenedUi(state, action: { payload: { isOpened: boolean | 'toggle' } }) {
       state.isSidebarOpened =
         typeof action.payload.isOpened === 'boolean'
@@ -50,16 +44,16 @@ const uiSlice = createSlice({
     setScreenDetailsUi(state, action: { payload: { w: number; h: number } }) {
       state.screenDetails = action.payload;
     },
-    setSelectedSectionIdxUi(
+    setSelectedContactIdxUi(
       state,
       action: {
         payload: {
-          sectionIdx: number;
+          contactIdx: number;
         };
         type: string;
       },
     ) {
-      state.selectedSectionIdx = action.payload.sectionIdx;
+      state.selectedContactIdx = action.payload.contactIdx;
     },
   },
 });
@@ -70,20 +64,17 @@ const {
   setWarningMessageUi,
   setInfoMessageUi,
   setPathnameUi,
-  setIsCartOpenedUi,
   setIsSidebarOpenedUi,
   setErrorMessageUi,
   initiateColorModeChangeUi,
   finalizeColorModeChangeUi,
   setIsMobileUi,
-  setColorModeToggleCoordsUi,
   setScreenDetailsUi,
-  setSelectedSectionIdxUi,
+  setSelectedContactIdxUi,
 } = uiSlice.actions;
 
 export {
   ui,
-  setIsCartOpenedUi,
   setIsSidebarOpenedUi,
   setPathnameUi,
   setSuccessMessageUi,
@@ -93,7 +84,6 @@ export {
   initiateColorModeChangeUi,
   finalizeColorModeChangeUi,
   setIsMobileUi,
-  setColorModeToggleCoordsUi,
   setScreenDetailsUi,
-  setSelectedSectionIdxUi,
+  setSelectedContactIdxUi,
 };

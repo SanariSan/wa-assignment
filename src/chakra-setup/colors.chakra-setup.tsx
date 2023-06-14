@@ -35,6 +35,13 @@ const COLORS = {
   black: {
     900: '#000000',
   },
+  whatsapp: {
+    bgDark: '#111B21',
+    navBgDark: '#202C33',
+    textColorDark: '#E9EDEF',
+    textColorAltDark: '#8696A0',
+    activeDark: '#2a3942',
+  },
 };
 
 export { COLORS };

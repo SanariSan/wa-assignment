@@ -13,14 +13,12 @@ import type { FC } from 'react';
 import { useCallback, useState } from 'react';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { COLORS } from '../../chakra-setup';
-import { changeRoute } from '../../containers/functional';
 import type { TLogin } from './login.type';
 
 const LoginComponent: FC<TLogin> = ({ isLoading, ...rest }) => {
   const { handleSubmit, errors, touched } = rest;
   const [hidden, setHidden] = useState(true);
-  const [impact, btnColor, errorMsg, inactive, secondaryAlt] = [
-    useColorModeValue(COLORS.yellow[400], COLORS.yellow[400]),
+  const [btnColor, errorMsg, inactive, secondaryAlt] = [
     useColorModeValue(COLORS.blue[800], COLORS.darkBlue[600]),
     useColorModeValue(COLORS.red[500], COLORS.red[300]),
     useColorModeValue(COLORS.blue[500], COLORS.blue[600]),
@@ -52,20 +50,20 @@ const LoginComponent: FC<TLogin> = ({ isLoading, ...rest }) => {
 
           <Flex direction={'column'} alignItems={'flex-start'} gap={3} w={'100%'}>
             <Text fontWeight={'bold'} variant={'md'}>
-              Username
+              Id Instance
             </Text>
             <InputGroup size="md">
               <Input
                 as={Field}
                 className="mb-1"
-                isInvalid={touched.username !== undefined && errors.username !== undefined}
+                isInvalid={touched.idInstance !== undefined && errors.idInstance !== undefined}
                 type="text"
-                name="username"
-                aria-label="username"
-                placeholder="Enter username"
+                name="idInstance"
+                aria-label="idInstance"
+                placeholder="Enter idInstance"
               />
             </InputGroup>
-            <ErrorMessage name="username">
+            <ErrorMessage name="idInstance">
               {(errorMessage: string) => (
                 <Text variant={'sm'} color={errorMsg}>
                   {errorMessage}
@@ -76,16 +74,17 @@ const LoginComponent: FC<TLogin> = ({ isLoading, ...rest }) => {
 
           <Flex direction={'column'} alignItems={'flex-start'} gap={3} w={'100%'}>
             <Text fontWeight={'bold'} variant={'md'}>
-              Password
+              Api Token Instance
             </Text>
             <InputGroup size="md">
               <Input
                 as={Field}
-                className="mb-1"
-                isInvalid={touched.password !== undefined && errors.password !== undefined}
+                isInvalid={
+                  touched.apiTokenInstance !== undefined && errors.apiTokenInstance !== undefined
+                }
                 type={hidden ? 'password' : 'text'}
-                name="password"
-                placeholder="Password"
+                name="apiTokenInstance"
+                placeholder="Enter apiTokenInstance"
               />
               <InputRightElement width="40px">
                 <Icon
@@ -103,7 +102,7 @@ const LoginComponent: FC<TLogin> = ({ isLoading, ...rest }) => {
                 />
               </InputRightElement>
             </InputGroup>
-            <ErrorMessage name="password">
+            <ErrorMessage name="apiTokenInstance">
               {(errorMessage: string) => (
                 <Text variant={'sm'} color={errorMsg}>
                   {errorMessage}
@@ -115,9 +114,8 @@ const LoginComponent: FC<TLogin> = ({ isLoading, ...rest }) => {
           <Flex w={'100%'} alignItems={'center'} justifyContent={'center'} gap={6}>
             <Button
               type={'submit'}
-              colorScheme={'yellow'}
+              colorScheme={'whatsapp'}
               size={{ base: 'sm', sm: 'md' }}
-              bg={impact}
               color={btnColor}
               opacity={1}
               _disabled={{
@@ -126,17 +124,6 @@ const LoginComponent: FC<TLogin> = ({ isLoading, ...rest }) => {
               isDisabled={isLoading}
             >
               {isLoading ? 'Loading...' : 'Log in'}
-            </Button>
-
-            <Button
-              variant={'outline'}
-              size={{ base: 'sm', sm: 'md' }}
-              isDisabled={isLoading}
-              onClick={() => {
-                changeRoute('/register');
-              }}
-            >
-              Sign up instead
             </Button>
           </Flex>
         </Flex>

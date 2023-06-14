@@ -1,6 +1,6 @@
 import { Box, Spinner, useColorModeValue } from '@chakra-ui/react';
 import type { FC } from 'react';
-import { useMemo, useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { Redirect } from 'react-router-dom';
 import { COLORS } from '../../../chakra-setup';
 import { ELOG_LEVEL } from '../../../general.type';
@@ -11,6 +11,7 @@ import {
   setUserAuthLoadStatus,
   userAuthIsAuthenticatedSelector,
   userAuthLoadingStatusSelector,
+  userInfoSelector,
 } from '../../../store';
 import type { TAuthRoute } from './authenticated-access.type';
 
@@ -29,6 +30,7 @@ const AuthenticatedAccessContainer: FC<TAuthRoute> = ({ children, mustBe, redire
   const loadingStatus = useAppSelector(userAuthLoadingStatusSelector);
   const [spinner] = [useColorModeValue(COLORS.yellow[400], COLORS.yellow[400])];
   const initialCheckCompleted = useRef(false);
+  const { idInstance, apiTokenInstance } = useAppSelector(userInfoSelector);
 
   useEffect(() => {
     publishLog(ELOG_LEVEL.DEBUG, {
@@ -47,8 +49,9 @@ const AuthenticatedAccessContainer: FC<TAuthRoute> = ({ children, mustBe, redire
   }, [d, loadingStatus]);
 
   useEffect(() => {
-    if (isAuthenticated === 'idle') void d(checkUserAuthStatusAsync());
-  }, [d, isAuthenticated]);
+    if (isAuthenticated === 'idle')
+      void d(checkUserAuthStatusAsync({ idInstance, apiTokenInstance }));
+  }, [d, isAuthenticated, apiTokenInstance, idInstance]);
 
   if (isAuthenticated === 'idle') {
     return (

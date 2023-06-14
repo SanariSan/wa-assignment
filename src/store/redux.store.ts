@@ -12,7 +12,7 @@ import {
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
 import createSagaMiddleware from 'redux-saga';
 import { rootWatcher } from './sagas';
-import { goods, user, ui, guide } from './slices';
+import { contacts, user, ui, guide } from './slices';
 
 const sagaMiddleware = createSagaMiddleware({
   effectMiddlewares: [
@@ -47,7 +47,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   user,
-  goods,
+  contacts,
   ui,
   guide,
 });

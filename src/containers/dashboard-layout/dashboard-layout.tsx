@@ -1,19 +1,23 @@
-import { Box, Button, Grid, GridItem, Text, useColorModeValue } from '@chakra-ui/react';
+import { Box, Button, Grid, GridItem, Image, Text, useColorModeValue } from '@chakra-ui/react';
 import type { FC } from 'react';
 import { useCallback } from 'react';
 import { COLORS } from '../../chakra-setup';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { setIsSidebarOpenedUi, uiSidebarStateSelector } from '../../store';
+import { setIsSidebarOpenedUi, setSelectedContactIdxUi, uiSidebarStateSelector } from '../../store';
 import type { TDashboardLayout } from './dashboard-layout.type';
+import { SidebarContainerMemo } from '../sidebar';
+import bgImg from '../../../assets/chat_bg.png';
+import { SidebarNavContainerMemo } from '../sidebar-nav';
+import { DashboardNavContainerMemo } from '../dashboard-nav';
 
 const DashboardLayoutContainer: FC<TDashboardLayout> = () => {
   const d = useAppDispatch();
   const isSidebarOpened = useAppSelector(uiSidebarStateSelector);
   // const { w, h } = useAppSelector(uiScreenDetailsSelector);
 
-  const [bg, bgAlt, border] = [
-    useColorModeValue(COLORS.white[200], COLORS.darkBlue[500]),
-    useColorModeValue(COLORS.white[900], COLORS.darkBlue[600]),
+  const [bg, navBg, border] = [
+    useColorModeValue(COLORS.whatsapp.bgDark, COLORS.whatsapp.bgDark),
+    useColorModeValue(COLORS.whatsapp.navBgDark, COLORS.whatsapp.navBgDark),
     useColorModeValue(COLORS.blue[300], COLORS.darkBlue[200]),
   ];
 
@@ -29,42 +33,85 @@ const DashboardLayoutContainer: FC<TDashboardLayout> = () => {
       h={'100%'}
       maxH={'100%'}
       w={'100%'}
-      templateRows={'auto'}
+      templateRows={'60px 1fr'}
       templateColumns={{
         base: isSidebarOpened ? '100% 0px' : '0px 100%',
         md: '400px 1fr',
       }}
-      templateAreas={`"side main"`}
+      templateAreas={`
+      "sidenav mainnav"
+      "side main"
+      `}
       transition={'0.3s ease-in-out'}
     >
+      <GridItem
+        area={'sidenav'}
+        bg={navBg}
+        zIndex={1}
+        borderStyle={'solid'}
+        borderColor={border}
+        borderLeft={'none'}
+        borderTop={'none'}
+        borderBottom={'none'}
+        borderWidth={'2px'}
+        overflow={'hidden'}
+      >
+        <Box overflow={'hidden'} position={'relative'} w={'100%'} h={'100%'}>
+          <SidebarNavContainerMemo />
+        </Box>
+      </GridItem>
+
       <GridItem
         area={'side'}
         bg={bg}
         zIndex={1}
-        borderStyle={'dashed'}
+        borderStyle={'solid'}
         borderColor={border}
-        borderWidth={'1px'}
+        borderLeft={'none'}
+        borderTop={'none'}
+        borderBottom={'none'}
+        borderWidth={'2px'}
         overflow={'hidden'}
       >
-        <Box bg={bgAlt} overflow={'hidden'} position={'relative'} w={'100%'} h={'100%'}>
-          <Text>Side</Text>
-          <Button
-            onClick={() => {
-              sidebarToggleCb();
-            }}
-            display={{ base: 'block', md: 'none' }}
-          >
-            X
-          </Button>
+        <Box overflow={'hidden'} position={'relative'} w={'100%'} h={'100%'}>
+          <SidebarContainerMemo sidebarToggleCb={sidebarToggleCb} />
         </Box>
       </GridItem>
 
-      <GridItem area={'main'} position={'relative'} overflowY={'auto'} overflowX={'hidden'}>
-        <Box bg={bgAlt} overflow={'hidden'} position={'relative'} w={'100%'} h={'100%'}>
+      <GridItem
+        area={'mainnav'}
+        bg={navBg}
+        zIndex={1}
+        borderStyle={'solid'}
+        borderColor={border}
+        borderLeft={'none'}
+        borderTop={'none'}
+        borderBottom={'none'}
+        borderWidth={'2px'}
+        overflow={'hidden'}
+      >
+        <Box overflow={'hidden'} position={'relative'} w={'100%'} h={'100%'}>
+          <DashboardNavContainerMemo />
+        </Box>
+      </GridItem>
+
+      <GridItem area={'main'} bg={bg} position={'relative'} overflowY={'auto'} overflowX={'hidden'}>
+        <Box
+          backgroundImage={bgImg}
+          position={'absolute'}
+          top={0}
+          left={0}
+          opacity={0.06}
+          backgroundRepeat={'repeat'}
+          width={'100%'}
+          height={'100%'}
+        />
+        <Box overflow={'hidden'} position={'relative'} w={'100%'} h={'100%'}>
           <Text>Main</Text>
           <Button
             onClick={() => {
               sidebarToggleCb();
+              void d(setSelectedContactIdxUi({ contactIdx: -1 }));
             }}
             display={{ base: 'block', md: 'none' }}
           >

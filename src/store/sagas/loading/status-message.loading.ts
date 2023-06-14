@@ -1,7 +1,6 @@
 import { put, takeEvery } from 'redux-saga/effects';
 import {
-  setCategoriesLoadStatus,
-  setEntitiesLoadStatus,
+  setContactsLoadStatus,
   setErrorMessageUi,
   setSuccessMessageUi,
   setUserAuthLoadStatus,
@@ -32,9 +31,7 @@ function* statusMessageWorker(action: {
 }
 
 function* loadingStatusWatcher() {
-  yield takeEvery(setUserAuthLoadStatus, statusMessageWorker);
-  yield takeEvery(setEntitiesLoadStatus, statusMessageWorker);
-  yield takeEvery(setCategoriesLoadStatus, statusMessageWorker);
+  yield takeEvery([setUserAuthLoadStatus, setContactsLoadStatus], statusMessageWorker);
 }
 
 export { loadingStatusWatcher };

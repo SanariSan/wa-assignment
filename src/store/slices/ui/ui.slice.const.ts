@@ -6,7 +6,6 @@ const UI_INIT_STATE: TUiInitState = {
   infoMessage: undefined,
   errorMessage: undefined,
   pathname: '/',
-  isCartOpened: false,
   isSidebarOpened: false,
   colorModeAnimationDuration: 1500,
   colorModeChangeStatus: 'completed',
@@ -19,7 +18,7 @@ const UI_INIT_STATE: TUiInitState = {
     w: 0,
     h: 0,
   },
-  selectedSectionIdx: -1,
+  selectedContactIdx: -1,
 };
 
 export { UI_INIT_STATE };

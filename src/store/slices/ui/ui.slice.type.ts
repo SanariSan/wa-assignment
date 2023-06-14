@@ -1,13 +1,7 @@
-import type { TGoodsCategoriesIncomingSuccessFields } from '../../../services/api';
-
 type TMessage = {
   title?: string;
   description?: string;
 };
-
-type TCategories = TGoodsCategoriesIncomingSuccessFields['data']['categories'];
-type TSelectedCategory = Exclude<TCategories[number], undefined>;
-type TSelectedModifier = Exclude<TSelectedCategory['modifiers'], undefined>[number];
 
 type TUiInitState = {
   successMessage: TMessage | undefined;
@@ -15,7 +9,6 @@ type TUiInitState = {
   warningMessage: TMessage | undefined;
   errorMessage: TMessage | undefined;
   pathname: Location['pathname'];
-  isCartOpened: boolean;
   isSidebarOpened: boolean;
   colorModeAnimationDuration: number;
   colorModeChangeStatus: 'completed' | 'ongoing';
@@ -25,7 +18,7 @@ type TUiInitState = {
     w: number;
     h: number;
   };
-  selectedSectionIdx: number;
+  selectedContactIdx: number;
 };
 
-export type { TMessage, TUiInitState, TCategories, TSelectedCategory, TSelectedModifier };
+export type { TMessage, TUiInitState };

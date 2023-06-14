@@ -5,8 +5,9 @@ type TIsAuthenticated = 'idle' | boolean;
 type TUserAuthInitState = {
   isAuthenticated: TIsAuthenticated;
   loadingStatus: TLoadingStatus;
-  username?: string;
-  email?: string;
+  idInstance: string;
+  apiTokenInstance: string;
+  wid: string;
 };
 
 export type { TUserAuthInitState, TIsAuthenticated };

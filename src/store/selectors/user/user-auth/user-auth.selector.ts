@@ -3,20 +3,24 @@ import type { TRootState } from '../../../redux.store.type';
 
 const userAuthLoadingStatusSelector = (state: TRootState) => state.user.loadingStatus;
 const userAuthIsAuthenticatedSelector = (state: TRootState) => state.user.isAuthenticated;
-const userInfoUsernameSelector = (state: TRootState) => state.user.username;
-const userInfoEmailSelector = (state: TRootState) => state.user.email;
+const userInfoIdInstanceSelector = (state: TRootState) => state.user.idInstance;
+const userInfoApiTokenInstanceSelector = (state: TRootState) => state.user.apiTokenInstance;
+const userInfoWIdSelector = (state: TRootState) => state.user.wid;
 const userInfoSelector = createSelector(
-  userInfoUsernameSelector,
-  userInfoEmailSelector,
-  (username, email) => ({
-    username,
-    email,
+  userInfoIdInstanceSelector,
+  userInfoApiTokenInstanceSelector,
+  userInfoWIdSelector,
+  (idInstance, apiTokenInstance, wid) => ({
+    idInstance,
+    apiTokenInstance,
+    wid,
   }),
 );
 
 export {
   userAuthLoadingStatusSelector,
   userAuthIsAuthenticatedSelector,
-  userInfoUsernameSelector,
+  userInfoIdInstanceSelector,
+  userInfoApiTokenInstanceSelector,
   userInfoSelector,
 };

@@ -5,14 +5,8 @@ import { object, string } from 'yup';
 // type TA = InferType<typeof VALIDATION_SCHEMA>;
 
 const VALIDATION_SCHEMA = object({
-  username: string()
-    .required('Username required')
-    .min(6, 'Username too short')
-    .max(28, 'Username too long!'),
-  password: string()
-    .required('Password required')
-    .min(6, 'Password too short')
-    .max(28, 'Password too long!'),
+  idInstance: string().required('idInstance required'),
+  apiTokenInstance: string().required('apiTokenInstance required'),
 });
 
 type TLoginFormValues = InferType<typeof VALIDATION_SCHEMA>;

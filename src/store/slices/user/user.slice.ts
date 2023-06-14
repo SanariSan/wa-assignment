@@ -1,11 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import type {
-  TAccessLoginOutgoingFields,
-  TAccessRegisterOutgoingFields,
-} from '../../../services/api';
 import type { TLoadingStatus } from '../slices.type';
 import { USER_AUTH_INIT_STATE } from './user.slice.const';
-import type { TIsAuthenticated } from './user.slice.type';
+import type { TIsAuthenticated, TUserAuthInitState } from './user.slice.type';
+import type { TAccessCheckSessionOutgoingFields } from '../../../services/api';
 
 /* eslint-disable no-param-reassign */
 
@@ -28,20 +25,15 @@ const userSlice = createSlice({
     ) {
       state.loadingStatus = action.payload.status;
     },
-    setUserInfo(state, action: { payload: { username?: string; email?: string }; type: string }) {
+    setUserInfo(state, action: { payload: Partial<TUserAuthInitState>; type: string }) {
       Object.entries(action.payload).forEach(([key, val]) => {
         state[key] = val;
       });
     },
     // sagas
-    checkUserAuthStatusAsync() {},
-    registerUserAsync(
+    checkUserAuthStatusAsync(
       state,
-      action: { payload: Partial<TAccessRegisterOutgoingFields>; type: string },
-    ) {},
-    loginUserAsync(
-      state,
-      action: { payload: Partial<TAccessLoginOutgoingFields>; type: string },
+      action: { payload: Partial<TAccessCheckSessionOutgoingFields>; type: string },
     ) {},
     logoutUserAsync() {},
   },
@@ -52,8 +44,6 @@ const {
   setUserIsAuthenticated,
   setUserAuthLoadStatus,
   checkUserAuthStatusAsync,
-  registerUserAsync,
-  loginUserAsync,
   logoutUserAsync,
   setUserInfo,
 } = userSlice.actions;
@@ -63,8 +53,6 @@ export {
   setUserIsAuthenticated,
   setUserAuthLoadStatus,
   checkUserAuthStatusAsync,
-  registerUserAsync,
-  loginUserAsync,
   logoutUserAsync,
   setUserInfo,
 };

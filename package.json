@@ -4,7 +4,6 @@
   "main": "./logic/index.js",
   "author": "SanariSan <SanariSan@users.noreply.github.com>",
   "license": "MIT",
-  "proxy": "http://localhost:80",
   "scripts": {
     "start": "node ./node_modules/cross-env/src/bin/cross-env.js REACT_APP_NODE_ENV=development react-app-rewired start",
     "startp": "node ./node_modules/cross-env/src/bin/cross-env.js REACT_APP_NODE_ENV=production react-app-rewired start",
