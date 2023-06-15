@@ -1,2 +1,3 @@
-export * from './request-base.services';
-export * from './request-base.services.type';
+export * from './request.services';
+export * from './request.services.type';
+export * from './errors.services';

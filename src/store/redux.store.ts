@@ -12,8 +12,9 @@ import {
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
 import createSagaMiddleware from 'redux-saga';
 import { rootWatcher } from './sagas';
-import { contacts, user, ui, guide } from './slices';
+import { contacts, user, ui, loading, fetchChatHistoryAsync, fetchUpdateAsync } from './slices';
 
+// advanced debugging template
 const sagaMiddleware = createSagaMiddleware({
   effectMiddlewares: [
     (next) => (action) => {
@@ -39,17 +40,22 @@ const sagaMiddleware = createSagaMiddleware({
  * const ignoreSerializableCheckActions = [registerUserAsync, loginUserAsync].map((_) => _.toString());
  */
 
+// Using abort controller as an argument, so have to ignore here
+const ignoredSerializableCheckActions = [fetchChatHistoryAsync, fetchUpdateAsync].map((_) =>
+  _.toString(),
+);
+
 const persistConfig = {
   key: 'root',
   storage,
-  blacklist: ['ui'],
+  blacklist: ['ui', 'loading'],
 };
 
 const rootReducer = combineReducers({
   user,
   contacts,
   ui,
-  guide,
+  loading,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -61,9 +67,16 @@ const Store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
-        // redux-persist
-        // ignoredActions: ignoreSerializableCheckActions,
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        // redux-persist and custom
+        ignoredActions: [
+          FLUSH,
+          REHYDRATE,
+          PAUSE,
+          PERSIST,
+          PURGE,
+          REGISTER,
+          ...ignoredSerializableCheckActions,
+        ],
       },
     }).concat(sagaMiddleware),
   devTools: process.env.REACT_APP_NODE_ENV === 'development',

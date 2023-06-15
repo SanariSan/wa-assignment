@@ -1,6 +1,6 @@
-import { Avatar, Box, Flex, Text, useColorModeValue } from '@chakra-ui/react';
-import { useState, useRef, useEffect, useMemo, memo } from 'react';
+import { Avatar, Flex, Text, useColorModeValue } from '@chakra-ui/react';
 import type { FC } from 'react';
+import { memo } from 'react';
 import { COLORS } from '../../chakra-setup';
 
 type TContactCardContainer = {
@@ -9,9 +9,16 @@ type TContactCardContainer = {
   idx: number;
   onSelect: ({ contactIdx }: { contactIdx: number }) => void;
   title: string;
+  lastMessage: { type: string | undefined; text: string };
 };
 
-const ContactCardContainer: FC<TContactCardContainer> = ({ isSelected, idx, onSelect, title }) => {
+const ContactCardContainer: FC<TContactCardContainer> = ({
+  isSelected,
+  idx,
+  onSelect,
+  title,
+  lastMessage,
+}) => {
   const [active, navBg, textColorDark, textColorAltDark] = [
     useColorModeValue(COLORS.whatsapp.activeDark, COLORS.whatsapp.activeDark),
     useColorModeValue(COLORS.whatsapp.navBgDark, COLORS.whatsapp.navBgDark),
@@ -50,7 +57,16 @@ const ContactCardContainer: FC<TContactCardContainer> = ({ isSelected, idx, onSe
           </Text>
         </Flex>
         <Flex w={'100%'} h={'100%'} alignItems={'center'} justifyContent={'flex-start'}>
-          <Text color={textColorAltDark}>Open dialog to start a conversation!</Text>
+          <Text color={textColorAltDark}>
+            {lastMessage.type !== undefined
+              ? lastMessage.type === 'outgoing'
+                ? 'You:'
+                : 'Them:'
+              : ''}{' '}
+            {lastMessage.text.length >= 28
+              ? `${lastMessage.text.slice(0, 28)}...`
+              : lastMessage.text}
+          </Text>
         </Flex>
       </Flex>
     </Flex>

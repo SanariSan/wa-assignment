@@ -4,13 +4,13 @@ import type { FC } from 'react';
 import { useState, useCallback } from 'react';
 import { LoginComponent } from '../../components/login';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { checkUserAuthStatusAsync, userAuthLoadingStatusSelector } from '../../store';
+import { checkUserAuthStatusAsync, loadingUserAuthSelector } from '../../store';
 import { FormControlContainerMemo } from '../form-control';
 import type { TLoginFormValues } from './login.const';
 import { VALIDATION_SCHEMA } from './login.const';
 
 const LoginContainer: FC = () => {
-  const userAuthLoadingState = useAppSelector(userAuthLoadingStatusSelector);
+  const userAuthLoadingState = useAppSelector(loadingUserAuthSelector);
   const dispatch = useAppDispatch();
 
   const [formValues] = useState<TLoginFormValues>({
@@ -31,7 +31,13 @@ const LoginContainer: FC = () => {
   );
 
   return (
-    <Formik initialValues={formValues} validationSchema={VALIDATION_SCHEMA} onSubmit={onSubmit}>
+    <Formik
+      initialValues={formValues}
+      validationSchema={VALIDATION_SCHEMA}
+      onSubmit={onSubmit}
+      validateOnChange={true}
+      validateOnBlur={true}
+    >
       {(formikConfig) => (
         <>
           <LoginComponent isLoading={userAuthLoadingState === 'loading'} {...formikConfig} />

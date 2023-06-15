@@ -41,6 +41,9 @@ const COLORS = {
     textColorDark: '#E9EDEF',
     textColorAltDark: '#8696A0',
     activeDark: '#2a3942',
+    messageOutgoingDark: '#005C4B',
+    messageIncomingDark: '#202C33',
+    dropdownDark: '#233138',
   },
 };
 

@@ -6,7 +6,7 @@ const UI_INIT_STATE: TUiInitState = {
   infoMessage: undefined,
   errorMessage: undefined,
   pathname: '/',
-  isSidebarOpened: false,
+  isSidebarOpened: true,
   colorModeAnimationDuration: 1500,
   colorModeChangeStatus: 'completed',
   isMobile: false,

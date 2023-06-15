@@ -1,8 +1,8 @@
 import type { TContactsInitState } from './contacts.slice.type';
 
-const GOODS_INIT_STATE: TContactsInitState = {
+const CONTACTS_INIT_STATE: TContactsInitState = {
   contacts: [],
-  loadingStatus: 'idle',
+  chatHistoryFetchSize: 500,
 };
 
-export { GOODS_INIT_STATE };
+export { CONTACTS_INIT_STATE };

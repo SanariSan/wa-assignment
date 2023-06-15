@@ -1,19 +1,22 @@
-import { Box, Button, Grid, GridItem, Image, Text, useColorModeValue } from '@chakra-ui/react';
+import { Box, Grid, GridItem, useColorModeValue } from '@chakra-ui/react';
 import type { FC } from 'react';
 import { useCallback } from 'react';
+import bgImg from '../../../assets/chat_bg.png';
 import { COLORS } from '../../chakra-setup';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { setIsSidebarOpenedUi, setSelectedContactIdxUi, uiSidebarStateSelector } from '../../store';
+import {
+  contactsSelectedContactInfo,
+  setIsSidebarOpenedUi,
+  uiSidebarStateSelector,
+} from '../../store';
+import { ChatContainerMemo, ChatNavContainerMemo } from '../chat';
+import { SidebarContainerMemo, SidebarNavContainerMemo } from '../sidebar';
 import type { TDashboardLayout } from './dashboard-layout.type';
-import { SidebarContainerMemo } from '../sidebar';
-import bgImg from '../../../assets/chat_bg.png';
-import { SidebarNavContainerMemo } from '../sidebar-nav';
-import { DashboardNavContainerMemo } from '../dashboard-nav';
 
 const DashboardLayoutContainer: FC<TDashboardLayout> = () => {
   const d = useAppDispatch();
   const isSidebarOpened = useAppSelector(uiSidebarStateSelector);
-  // const { w, h } = useAppSelector(uiScreenDetailsSelector);
+  const selectedContactInfo = useAppSelector(contactsSelectedContactInfo);
 
   const [bg, navBg, border] = [
     useColorModeValue(COLORS.whatsapp.bgDark, COLORS.whatsapp.bgDark),
@@ -33,7 +36,7 @@ const DashboardLayoutContainer: FC<TDashboardLayout> = () => {
       h={'100%'}
       maxH={'100%'}
       w={'100%'}
-      templateRows={'60px 1fr'}
+      templateRows={'70px 1fr'}
       templateColumns={{
         base: isSidebarOpened ? '100% 0px' : '0px 100%',
         md: '400px 1fr',
@@ -47,6 +50,7 @@ const DashboardLayoutContainer: FC<TDashboardLayout> = () => {
       <GridItem
         area={'sidenav'}
         bg={navBg}
+        boxShadow={'0px 0px 20px -5px rgba(0,0,0,0.3)'}
         zIndex={1}
         borderStyle={'solid'}
         borderColor={border}
@@ -81,6 +85,7 @@ const DashboardLayoutContainer: FC<TDashboardLayout> = () => {
       <GridItem
         area={'mainnav'}
         bg={navBg}
+        boxShadow={'0px 0px 20px -5px rgba(0,0,0,0.3)'}
         zIndex={1}
         borderStyle={'solid'}
         borderColor={border}
@@ -91,7 +96,7 @@ const DashboardLayoutContainer: FC<TDashboardLayout> = () => {
         overflow={'hidden'}
       >
         <Box overflow={'hidden'} position={'relative'} w={'100%'} h={'100%'}>
-          <DashboardNavContainerMemo />
+          <ChatNavContainerMemo sidebarToggleCb={sidebarToggleCb} />
         </Box>
       </GridItem>
 
@@ -107,16 +112,7 @@ const DashboardLayoutContainer: FC<TDashboardLayout> = () => {
           height={'100%'}
         />
         <Box overflow={'hidden'} position={'relative'} w={'100%'} h={'100%'}>
-          <Text>Main</Text>
-          <Button
-            onClick={() => {
-              sidebarToggleCb();
-              void d(setSelectedContactIdxUi({ contactIdx: -1 }));
-            }}
-            display={{ base: 'block', md: 'none' }}
-          >
-            X
-          </Button>
+          {selectedContactInfo !== undefined && <ChatContainerMemo />}
         </Box>
       </GridItem>
     </Grid>

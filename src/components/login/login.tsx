@@ -55,7 +55,6 @@ const LoginComponent: FC<TLogin> = ({ isLoading, ...rest }) => {
             <InputGroup size="md">
               <Input
                 as={Field}
-                className="mb-1"
                 isInvalid={touched.idInstance !== undefined && errors.idInstance !== undefined}
                 type="text"
                 name="idInstance"

@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useAppSelector } from '../redux';
-import { contactsLoadingStatusSelector, userAuthLoadingStatusSelector } from '../../store';
+import { loadingHistorySelector, loadingUserAuthSelector } from '../../store';
 
 const useLoadingTracker = () => {
-  const authLoadingStatus = useAppSelector(userAuthLoadingStatusSelector);
-  const contactsLoadingStatus = useAppSelector(contactsLoadingStatusSelector);
+  const userAuthLoadingStatus = useAppSelector(loadingUserAuthSelector);
+  const historyLoadingStatus = useAppSelector(loadingHistorySelector);
   const [isLoading, setIsLoading] = useState(false);
 
   // path change fake loading just for UI consistency
@@ -22,15 +22,15 @@ const useLoadingTracker = () => {
   useEffect(() => {
     // || dashboardLoadingStatus === 'loading' || smthElse === true ...
     if (
-      authLoadingStatus === 'loading' ||
-      contactsLoadingStatus === 'loading' ||
+      userAuthLoadingStatus === 'loading' ||
+      historyLoadingStatus === 'loading' ||
       pageChangedLoading
     ) {
       setIsLoading(true);
     } else {
       setIsLoading(false);
     }
-  }, [authLoadingStatus, contactsLoadingStatus, pageChangedLoading]);
+  }, [userAuthLoadingStatus, historyLoadingStatus, pageChangedLoading]);
 
   return { isLoading };
 };

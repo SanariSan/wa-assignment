@@ -2,7 +2,7 @@ import { call, cancelled, put, takeLatest } from 'redux-saga/effects';
 import { ELOG_LEVEL } from '../../../../general.type';
 import type { TSafeReturn } from '../../../../helpers/sagas';
 import { safe } from '../../../../helpers/sagas';
-import { publishLog } from '../../../../modules/access-layer/events/pubsub';
+import { publishError, publishLog } from '../../../../modules/access-layer/events/pubsub';
 import type {
   TAccessCheckSessionIncomingFailureFields,
   TAccessCheckSessionIncomingSuccessFields,
@@ -19,6 +19,7 @@ import {
   setUserInfo,
   setUserIsAuthenticated,
 } from '../../../slices';
+import { AbortError } from '../../../../services';
 
 function* checkUserAuthStatusWorker(action: {
   type: string;
@@ -54,6 +55,10 @@ function* checkUserAuthStatusWorker(action: {
     publishLog(ELOG_LEVEL.DEBUG, fetchStatus);
 
     if (fetchStatus.error !== undefined) {
+      if (fetchStatus.error instanceof AbortError) {
+        publishError(ELOG_LEVEL.DEBUG, fetchStatus.error);
+        return;
+      }
       yield put(
         setUserAuthLoadStatus({ status: 'failure', message: String(fetchStatus.error.message) }),
       );
