@@ -28,7 +28,7 @@
 
 <br />
 
-<div align="center"><img src="https://github.com/SanariSan/tech-store/blob/master/assets/1.png?raw=true" width="859" height="483"></div>
-<div align="center"><img src="https://github.com/SanariSan/tech-store/blob/master/assets/2.png?raw=true" width="859" height="483"></div>
+<div align="center"><img src="https://github.com/SanariSan/wa-assignment/blob/master/assets/1.png?raw=true" width="859" height="483"></div>
+<div align="center"><img src="https://github.com/SanariSan/wa-assignment/blob/master/assets/2.png?raw=true" width="859" height="483"></div>
 <!-- <div align="center"><img src="./assets/main-page.png" width="859" height="483"></div> -->
 
