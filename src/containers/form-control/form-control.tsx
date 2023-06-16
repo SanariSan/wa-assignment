@@ -2,10 +2,11 @@ import { useFormikContext } from 'formik';
 import type { FC } from 'react';
 import { memo, useEffect } from 'react';
 
-const FormControlContainer: FC<{ isLoading: boolean; formValues?: Record<string, string> }> = ({
-  isLoading,
-  formValues,
-}) => {
+const FormControlContainer: FC<{
+  isLoading: boolean;
+  formValues?: Record<string, string>;
+  forceResetForm?: boolean;
+}> = ({ isLoading, formValues, forceResetForm }) => {
   const { resetForm, setSubmitting, setFieldValue } = useFormikContext();
 
   useEffect(() => {
@@ -13,7 +14,12 @@ const FormControlContainer: FC<{ isLoading: boolean; formValues?: Record<string,
       resetForm();
       setSubmitting(false);
     }
-  }, [isLoading, resetForm, setSubmitting]);
+  }, [isLoading, forceResetForm, resetForm, setSubmitting]);
+
+  useEffect(() => {
+    resetForm();
+    setSubmitting(false);
+  }, [forceResetForm, resetForm, setSubmitting]);
 
   useEffect(() => {
     if (formValues === undefined) return;

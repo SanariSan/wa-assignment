@@ -32,13 +32,13 @@ const SkeletonPlaceholderComponent: FC<TSkeleton> = ({ isLoading, width, height,
 
   return (
     <Skeleton
+      opacity={isLoading ? 1 : 0}
+      startColor={startColor}
+      endColor={endColor}
       {...sizePreset}
       width={width}
       height={height}
       {...rest}
-      opacity={isLoading ? 1 : 0}
-      startColor={startColor}
-      endColor={endColor}
       transition={'opacity 1s linear'}
     />
   );

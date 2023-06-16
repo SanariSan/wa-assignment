@@ -7,7 +7,7 @@ const AccessCheckSessionOutgoingDTO = object({
 });
 
 const AccessCheckSessionIncomingSuccessDTO = object({
-  wid: string().optional(),
+  wid: string().required(),
   countryInstance: string().optional(),
   typeAccount: string().optional(),
   webhookUrl: string().optional(),

@@ -37,10 +37,22 @@ const COLORS = {
   },
   whatsapp: {
     bgDark: '#111B21',
+    bgLight: '#EFEAE6',
     navBgDark: '#202C33',
+    navBgLight: '#196B5D',
     textColorDark: '#E9EDEF',
+    textColorLight: '#111111',
     textColorAltDark: '#8696A0',
+    textColorAltLight: '#A6A6A6',
     activeDark: '#2a3942',
+    activeLight: '#c7c8c9',
+    messageOutgoingDark: '#005C4B',
+    messageOutgoingLight: '#E2FCCD',
+    messageIncomingDark: '#202C33',
+    messageIncomingLight: '#FFFFFF',
+    dropdownDark: '#233138',
+    accentDark: '#00A884',
+    accentLight: '#00cfa2',
   },
 };
 

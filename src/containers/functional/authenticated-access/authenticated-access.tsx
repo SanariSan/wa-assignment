@@ -10,7 +10,7 @@ import {
   checkUserAuthStatusAsync,
   setUserAuthLoadStatus,
   userAuthIsAuthenticatedSelector,
-  userAuthLoadingStatusSelector,
+  loadingUserAuthSelector,
   userInfoSelector,
 } from '../../../store';
 import type { TAuthRoute } from './authenticated-access.type';
@@ -27,7 +27,7 @@ const AuthenticatedAccessContainer: FC<TAuthRoute> = ({ children, mustBe, redire
         : 'any',
     [isAuthenticated],
   );
-  const loadingStatus = useAppSelector(userAuthLoadingStatusSelector);
+  const userAuthLoadingStatus = useAppSelector(loadingUserAuthSelector);
   const [spinner] = [useColorModeValue(COLORS.yellow[400], COLORS.yellow[400])];
   const initialCheckCompleted = useRef(false);
   const { idInstance, apiTokenInstance } = useAppSelector(userInfoSelector);
@@ -45,8 +45,8 @@ const AuthenticatedAccessContainer: FC<TAuthRoute> = ({ children, mustBe, redire
   useEffect(() => {
     if (initialCheckCompleted.current) return;
     initialCheckCompleted.current = true;
-    if (loadingStatus === 'loading') void d(setUserAuthLoadStatus({ status: 'idle' }));
-  }, [d, loadingStatus]);
+    if (userAuthLoadingStatus === 'loading') void d(setUserAuthLoadStatus({ status: 'idle' }));
+  }, [d, userAuthLoadingStatus]);
 
   useEffect(() => {
     if (isAuthenticated === 'idle')
@@ -60,7 +60,7 @@ const AuthenticatedAccessContainer: FC<TAuthRoute> = ({ children, mustBe, redire
           position: 'fixed',
           top: '50%',
           left: '50%',
-          visibility: loadingStatus === 'loading' ? 'visible' : 'hidden',
+          visibility: userAuthLoadingStatus === 'loading' ? 'visible' : 'hidden',
           zIndex: 1,
         }}
       >

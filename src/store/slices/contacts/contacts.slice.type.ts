@@ -1,26 +1,15 @@
-import type { TLoadingStatus } from '../slices.type';
+import type { TContactsFetchChatHistoryIncomingSuccessFields } from '../../../services/api';
 
-// type TEntities = TGoodsEntitiesIncomingSuccessFields['data']['entities'];
-// type TCategories = TGoodsCategoriesIncomingSuccessFields['data']['categories'];
-// type TSelectedCategory = Exclude<TCategories[number], undefined>;
-// type TSelectedModifier = Exclude<TSelectedCategory['modifiers'], undefined>[number];
-
-// todo: chat history comes from validate DTO
-
-type TChatHistory = Array<{
-  from: string;
-}>;
+type TChatHistory = TContactsFetchChatHistoryIncomingSuccessFields;
 
 type TContacts = Array<{
   wid: string;
-  lastMessage: string;
   chatHistory: TChatHistory;
 }>;
 
 type TContactsInitState = {
   contacts: TContacts;
-  loadingStatus: TLoadingStatus;
-  // historyLoadingStatus: TLoadingStatus;
+  chatHistoryFetchSize: number;
 };
 
-export type { TContactsInitState, TContacts, TChatHistory };
+export type { TChatHistory, TContacts, TContactsInitState };

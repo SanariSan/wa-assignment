@@ -1,9 +1,11 @@
 import qs from 'query-string';
 import { ELOG_LEVEL } from '../../../general.type';
 import { publishError } from '../../../modules/access-layer/events/pubsub';
-import { request } from '../../request-base.services';
+import { request } from '../../request.services';
 import type { TAccessCheckSessionOutgoingFields } from '../dto';
 import { AccessCheckSessionIncomingSuccessDTO, validateDTO } from '../dto';
+import { AbortError, InternalError } from '../../errors.services';
+import { GET_ROUTE } from '../routes.api.const';
 
 export async function checkUserAuthStatus({
   dto,
@@ -13,9 +15,10 @@ export async function checkUserAuthStatus({
   abortSignal: AbortSignal;
 }) {
   try {
+    const { idInstance, apiTokenInstance } = dto;
     const response: Response = await request({
       url: qs.stringifyUrl({
-        url: `${process.env.REACT_APP_API_URL}/waInstance${dto.idInstance}/getSettings/${dto.apiTokenInstance}`,
+        url: GET_ROUTE.CHECK_SESSION({ idInstance, apiTokenInstance }),
       }),
       abortSignal,
     });
@@ -35,14 +38,14 @@ export async function checkUserAuthStatus({
         detail: 'Invalid credentials',
       },
     };
-    // return {
-    //   failure: await validateDTO({
-    //     schema: AccessCheckSessionIncomingFailureDTO,
-    //     value: parsedJsonResponse,
-    //   }),
-    // };
   } catch (error) {
-    publishError(ELOG_LEVEL.DEBUG, error as Error);
-    throw new Error('Internal error');
+    const eCast = error as Error;
+    publishError(ELOG_LEVEL.DEBUG, eCast);
+
+    if (eCast.message === 'Request externally aborted') {
+      throw new AbortError({ message: eCast.message });
+    }
+
+    throw new InternalError({ message: 'Internal error' });
   }
 }

@@ -99,7 +99,7 @@ const FancyThemeSwitchContainer: FC<TFancyThemeSwitchContainer> = ({ screenshotT
 
   useLayoutEffect(() => {
     if (imageLocal !== null && overlayCleanupTimer.current === undefined) {
-      void sleep(300).then(() => {
+      void sleep(200).then(() => {
         toggleColorMode();
         void d(finalizeColorModeChangeUi());
         return;

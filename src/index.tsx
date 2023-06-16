@@ -31,7 +31,6 @@ root.render(
         <ChakraProvider theme={THEME} resetCSS={true}>
           <ColorModeScript initialColorMode={THEME.config.initialColorMode} />
           <Fonts />
-          {/* <ThemeControllerContainer /> */}
           <Router history={history}>
             <GlobalHistoryCatcherContainer />
             <App />

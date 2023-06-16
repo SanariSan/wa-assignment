@@ -1,33 +1,29 @@
 import path from 'path';
 
-const constructApiUrl = (base: string) => (apiVersion: string) => (urlPath: string) =>
-  new URL(path.join(`api`, `${apiVersion}`, `${urlPath}`), base)[
-    process.env.REACT_APP_NODE_ENV === 'production' ? 'href' : 'pathname'
-  ];
-const constructAssetsUrl = (base: string) => (urlPath: string) => (filename: string) =>
-  new URL(path.join(`${urlPath}`, `${filename}`), base)[
-    process.env.REACT_APP_NODE_ENV === 'production' ? 'href' : 'pathname'
-  ];
+const constructApiUrl = (base: string) => (urlPath: string) =>
+  new URL(path.join(`${urlPath}`), base).href;
+const getApiUrl = constructApiUrl(process.env.REACT_APP_API_URL);
 
-const getApiUrl = constructApiUrl(process.env.REACT_APP_API_URL)(process.env.REACT_APP_API_VERSION);
-const getAssetsUrlPartial = constructAssetsUrl(process.env.REACT_APP_API_URL);
-
-const STATIC_ROUTES = {
-  REGISTER: '/access/register',
-  LOGIN: '/access/login',
-  CHANGE_PASSWORD: '/access/change-password',
-  LOGOUT: '/access/logout',
-  AUTH_STATUS: '/access/auth-status',
-  CATEGORIES: '/goods/categories',
-  ENTITIES: '/goods/entitities',
-  ASSETS: '/assets',
-  ASSETS_RANDOM: '/assets/random',
+type TAuthParamsBase = {
+  idInstance: string;
+  apiTokenInstance: string;
 };
 
-const ROUTES = {
-  ACCESS: {
-    AUTH_STATUS: getApiUrl(STATIC_ROUTES.AUTH_STATUS),
-  },
+const GET_ROUTE = {
+  CHECK_SESSION: ({ idInstance, apiTokenInstance }: TAuthParamsBase) =>
+    getApiUrl(`/waInstance${idInstance}/getSettings/${apiTokenInstance}`),
+  FETCH_HISTORY: ({ idInstance, apiTokenInstance }: TAuthParamsBase) =>
+    getApiUrl(`/waInstance${idInstance}/getChatHistory/${apiTokenInstance}`),
+  RECEIVE_UPDATE: ({ idInstance, apiTokenInstance }: TAuthParamsBase) =>
+    getApiUrl(`/waInstance${idInstance}/receiveNotification/${apiTokenInstance}`),
+  SEND_MESSAGE: ({ idInstance, apiTokenInstance }: TAuthParamsBase) =>
+    getApiUrl(`/waInstance${idInstance}/sendMessage/${apiTokenInstance}`),
+  AKNOWLEDGE_UPDATE: ({
+    idInstance,
+    apiTokenInstance,
+    receiptId,
+  }: TAuthParamsBase & { receiptId: number }) =>
+    getApiUrl(`/waInstance${idInstance}/deleteNotification/${apiTokenInstance}/${receiptId}`),
 };
 
-export { STATIC_ROUTES, ROUTES };
+export { GET_ROUTE };

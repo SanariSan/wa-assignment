@@ -1,7 +1,6 @@
 import { createSelector } from 'reselect';
 import type { TRootState } from '../../../redux.store.type';
 
-const userAuthLoadingStatusSelector = (state: TRootState) => state.user.loadingStatus;
 const userAuthIsAuthenticatedSelector = (state: TRootState) => state.user.isAuthenticated;
 const userInfoIdInstanceSelector = (state: TRootState) => state.user.idInstance;
 const userInfoApiTokenInstanceSelector = (state: TRootState) => state.user.apiTokenInstance;
@@ -18,7 +17,6 @@ const userInfoSelector = createSelector(
 );
 
 export {
-  userAuthLoadingStatusSelector,
   userAuthIsAuthenticatedSelector,
   userInfoIdInstanceSelector,
   userInfoApiTokenInstanceSelector,
