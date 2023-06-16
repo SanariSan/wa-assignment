@@ -2,7 +2,7 @@
   "name": "wa-assignment",
   "version": "1.0.0",
   "main": "./logic/index.js",
-  "homepage": "https://sanarisan.github.io/wa-assignment",
+  "homepage": "https://sanarisan.github.io/wa-assignment/",
   "author": "SanariSan <SanariSan@users.noreply.github.com>",
   "license": "MIT",
   "scripts": {

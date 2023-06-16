@@ -49,15 +49,7 @@ const ChatContainer: FC<TChatContainer> = () => {
 
   return (
     <Flex w={'100%'} h={'100%'} direction={'column'}>
-      <Flex
-        w={'100%'}
-        h={'100%'}
-        direction={'column'}
-        overflowY={'auto'}
-        overflowX={'auto'}
-        gap={5}
-        p={5}
-      >
+      <Flex w={'100%'} h={'100%'} direction={'column'} overflowY={'auto'} gap={5} p={5}>
         {colorModeChangeStatus !== 'ongoing' && chatHistoryMemo}
         <Box ref={lastMessageRef} />
       </Flex>

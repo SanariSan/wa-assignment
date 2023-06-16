@@ -23,7 +23,7 @@ const ChatMessageComponent: FC<TChatMessageComponent> = ({ type, textMessage, ti
       w={'100%'}
       h={'max-content'}
       minH={'max-content'}
-      minW={'250px'}
+      minW={'275px'}
       alignItems={'center'}
       justifyContent={type === 'outgoing' ? 'flex-end' : 'flex-start'}
     >
