@@ -18,11 +18,13 @@ import type { TLogin } from './login.type';
 const LoginComponent: FC<TLogin> = ({ isLoading, ...rest }) => {
   const { handleSubmit, errors, touched } = rest;
   const [hidden, setHidden] = useState(true);
-  const [btnColor, errorMsg, inactive, secondaryAlt] = [
+  const [btnColor, errorMsg, inactiveIcon, secondaryAlt, inactive, active] = [
     useColorModeValue(COLORS.blue[800], COLORS.darkBlue[600]),
     useColorModeValue(COLORS.red[500], COLORS.red[300]),
     useColorModeValue(COLORS.blue[500], COLORS.blue[600]),
     useColorModeValue(COLORS.blue[600], COLORS.blue[500]),
+    useColorModeValue(COLORS.whatsapp.navBgLight, COLORS.whatsapp.navBgDark),
+    useColorModeValue(COLORS.whatsapp.activeLight, COLORS.whatsapp.activeDark),
   ];
 
   const toggleHidden = useCallback(() => {
@@ -60,6 +62,8 @@ const LoginComponent: FC<TLogin> = ({ isLoading, ...rest }) => {
                 name="idInstance"
                 aria-label="idInstance"
                 placeholder="Enter idInstance"
+                borderColor={inactive}
+                focusBorderColor={active}
               />
             </InputGroup>
             <ErrorMessage name="idInstance">
@@ -84,18 +88,20 @@ const LoginComponent: FC<TLogin> = ({ isLoading, ...rest }) => {
                 type={hidden ? 'password' : 'text'}
                 name="apiTokenInstance"
                 placeholder="Enter apiTokenInstance"
+                borderColor={inactive}
+                focusBorderColor={active}
               />
               <InputRightElement width="40px">
                 <Icon
                   as={hidden ? AiFillEyeInvisible : AiFillEye}
                   onClick={toggleHidden}
                   boxSize={{ base: 4, sm: 5 }}
-                  color={inactive}
+                  color={inactiveIcon}
                   _hover={{
                     color: secondaryAlt,
                   }}
                   _active={{
-                    color: inactive,
+                    color: inactiveIcon,
                   }}
                   cursor={'pointer'}
                 />

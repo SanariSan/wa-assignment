@@ -18,7 +18,7 @@ const LoadingTrackerProgressContainer: FC = () => {
   const { isMounted } = useDelayedUnmount({ isVisible: isLoading, delay: 700 });
   const [percent, setPercent] = useState(() => calculateExpPercentage(0, coeff));
   const timerRef = useRef<NodeJS.Timer>();
-  const [impact] = [useColorModeValue(COLORS.yellow[400], COLORS.yellow[400])];
+  const [loadingBg] = [useColorModeValue(COLORS.whatsapp.accentLight, COLORS.whatsapp.accentDark)];
 
   // first set live loading state to be able to access in setTimeout cb
   useEffect(() => {
@@ -61,7 +61,7 @@ const LoadingTrackerProgressContainer: FC = () => {
     <>
       {isMounted && (
         <Box
-          bg={impact}
+          bg={loadingBg}
           opacity={isLoading ? 1 : 0}
           boxShadow={'0px -2px 5px 0px rgba(0,0,0,0.75)'}
           position={'fixed'}

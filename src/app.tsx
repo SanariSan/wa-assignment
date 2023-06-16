@@ -1,8 +1,9 @@
-import { Box } from '@chakra-ui/react';
+import { Box, useColorModeValue } from '@chakra-ui/react';
 import type { FC } from 'react';
 import { useRef } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { DashboardLayoutContainer } from './containers/dashboard-layout';
+import { COLORS } from './chakra-setup';
+import { DashboardLayoutContainer } from './containers/dashboard';
 import {
   AuthenticatedAccessContainer,
   ErrorBoundaryGenericContainerMemo,
@@ -17,6 +18,7 @@ import { ToastsContainerMemo } from './containers/toast/toast';
 
 const App: FC = () => {
   const screenshotTargetRef = useRef(null);
+  const [bg] = [useColorModeValue(COLORS.whatsapp.bgLight, COLORS.whatsapp.bgDark)];
 
   return (
     <ErrorBoundaryGenericContainerMemo>
@@ -34,12 +36,12 @@ const App: FC = () => {
         alignItems={'center'}
         justifyContent={'center'}
         flexDirection={'column'}
+        bg={bg}
       >
         <Switch>
           <Route exact path={'/'}>
             <AuthenticatedAccessContainer mustBe={'authenticated'} redirectLocation={'/login'}>
               <DashboardLayoutContainer />
-              {/* <HomeContainerMemo /> */}
             </AuthenticatedAccessContainer>
           </Route>
           <Route exact path="/login">

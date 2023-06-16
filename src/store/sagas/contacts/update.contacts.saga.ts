@@ -155,6 +155,7 @@ function* receiveUpdateWorker(action: { type: string }) {
       const {
         receiptId,
         body: {
+          timestamp,
           typeWebhook,
           senderData: { chatId },
           idMessage,
@@ -177,6 +178,7 @@ function* receiveUpdateWorker(action: { type: string }) {
             chatId,
             idMessage,
             textMessage,
+            timestamp,
           },
         }),
       );

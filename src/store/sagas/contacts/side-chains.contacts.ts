@@ -2,7 +2,6 @@ import { cancelled, put, select, takeEvery, takeLatest } from 'redux-saga/effect
 import {
   contactsChatHistoryFetchSizeSelector,
   contactsSelectedContactInfo,
-  contactsSelector,
   loadingUpdatesSelector,
 } from '../../selectors';
 import type { TContacts } from '../../slices';
@@ -19,11 +18,6 @@ function* fetchLastMessageOnContactsAddWorker(action: {
   payload: { contact: Pick<TContacts[number], 'wid'> };
   type: string;
 }) {
-  const contacts = (yield select(contactsSelector)) as TContacts;
-  const widsSet = new Set(contacts.map((c) => c.wid));
-
-  if (widsSet.has(action.payload.contact.wid)) return;
-
   yield put(fetchChatHistoryAsync({ wid: action.payload.contact.wid, qty: 1 }));
 }
 

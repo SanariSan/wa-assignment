@@ -1,4 +1,4 @@
-import { call, cancelled, put, select, takeEvery, takeLatest } from 'redux-saga/effects';
+import { call, cancelled, delay, put, select, takeEvery, takeLatest } from 'redux-saga/effects';
 import { ELOG_LEVEL } from '../../../general.type';
 import type { TSafeReturn } from '../../../helpers/sagas';
 import { safe } from '../../../helpers/sagas';
@@ -41,6 +41,7 @@ function* sendMessageWorker(action: {
   const abortController = action.payload.abortController ?? new AbortController();
   try {
     yield put(setSendMessageLoadStatus({ status: 'loading' }));
+    yield delay(300);
 
     const idInstance = (yield select(userInfoIdInstanceSelector)) as string;
     const apiTokenInstance = (yield select(userInfoApiTokenInstanceSelector)) as string;
@@ -98,6 +99,7 @@ function* sendMessageWorker(action: {
             chatId,
             idMessage: fetchStatus.response.success.idMessage,
             textMessage: action.payload.message,
+            timestamp: Date.now() / 1000,
           },
         }),
       );

@@ -23,8 +23,7 @@ const GET_ROUTE = {
     apiTokenInstance,
     receiptId,
   }: TAuthParamsBase & { receiptId: number }) =>
-    getApiUrl(`/waInstance${idInstance}/deleteNotification
-    /${apiTokenInstance}/${receiptId}`),
+    getApiUrl(`/waInstance${idInstance}/deleteNotification/${apiTokenInstance}/${receiptId}`),
 };
 
 export { GET_ROUTE };
