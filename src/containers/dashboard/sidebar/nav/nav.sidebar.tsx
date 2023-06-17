@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import { memo } from 'react';
+import { memo, useEffect, useRef } from 'react';
 import { Flex } from '@chakra-ui/react';
 import { SidebarNavComponentMemo } from '../../../../components/dashboard';
 import { ThemeToggleContainerMemo } from '../../../theme-toggle';
@@ -22,7 +22,7 @@ const SidebarNavContainer: FC<TSidebarNavContainer> = () => {
       alignItems={'center'}
       position={'relative'}
     >
-      <ThemeToggleContainerMemo forceRecalPosition={isSidebarOpened} />
+      <ThemeToggleContainerMemo forceRecalcPosition={isSidebarOpened} />
       <SidebarNavComponentMemo />
     </Flex>
   );

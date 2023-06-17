@@ -11,7 +11,6 @@ import {
 } from '../../store';
 
 type TThemeToggleContainer = {
-  [key: string]: unknown;
   forceRecalcPosition?: unknown;
 };
 
