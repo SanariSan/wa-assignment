@@ -47,7 +47,6 @@ jobs:
             chmod +x ./deploy-entrypoint-build.sh &&
             
             REACT_APP_API_URL=${{ secrets.CORS_URL }}
-            DEV_TAG=${{ secrets.DEV_TAG }}
             ./deploy-entrypoint-build.sh
 
 
@@ -68,7 +67,6 @@ jobs:
             cd /root/code/wa-static &&
             chmod +x ./deploy-entrypoint-build.sh &&
             
-            DEV_TAG=${{ secrets.DEV_TAG }}
             VIRTUAL_HOST=${{ secrets.VIRTUAL_HOST }}
             LETSENCRYPT_HOST=${{ secrets.LETSENCRYPT_HOST }}
             ./deploy-entrypoint-run.sh
