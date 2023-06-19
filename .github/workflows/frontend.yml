@@ -9,21 +9,22 @@ on:
 
 jobs:
   clone-build-send-front:
-    name: Clone frontend from monorepo, build in docker, send to vps
+    name: Clone front, build in docker, send to vps
     runs-on: ubuntu-latest
 
     steps:
-      - name: checkout
+      - name: Checkout
         uses: actions/checkout@v3.5.2
         with:
           token: ${{ secrets.PAT }}
-      - name: build
+      - name: Build
         run: >
           chmod +x ./deploy-entrypoint-build.sh &&
           
-          REACT_APP_API_URL=${{ secrets.CORS_URL }} ./deploy-entrypoint-build.sh
+          REACT_APP_API_URL=${{ secrets.CORS_URL }}
+          /bin/bash ./deploy-entrypoint-build.sh
 
-      - name: Copy repository contents via scp
+      - name: Scp send
         uses: appleboy/scp-action@v0.1.4
         env:
           HOST: ${{ secrets.HOST }}
@@ -38,12 +39,12 @@ jobs:
           target: '/root/code/wa-static'
 
   run-host:
-    name: Launch frontend static hosting
+    name: Launch front static hosting
     needs: [clone-build-send-front]
     runs-on: ubuntu-latest
 
     steps:
-      - name: Executing remote command
+      - name: Build & Run host
         uses: appleboy/ssh-action@v0.1.4
         with:
           HOST: ${{ secrets.HOST }}
@@ -56,4 +57,4 @@ jobs:
 
             VIRTUAL_HOST=${{ secrets.VIRTUAL_HOST }}
             LETSENCRYPT_HOST=${{ secrets.LETSENCRYPT_HOST }}
-            ./deploy-entrypoint-run.sh
+            /bin/bash ./deploy-entrypoint-host.sh
