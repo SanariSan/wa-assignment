@@ -14,60 +14,66 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3.5.2
-
-      - name: Copy repository contents via scp
-        uses: appleboy/scp-action@v0.1.4
-        env:
-          HOST: ${{ secrets.HOST }}
-          USERNAME: ${{ secrets.USERNAME }}
-          PORT: ${{ secrets.PORT }}
-          KEY: ${{ secrets.SSHKEY }}
-        with:
-          rm: true
-          overwrite: true
-          strip_components: 0
-          source: './*'
-          target: '/root/code/wa-static'
-
-  build-front:
-    name: Build frontend
-    needs: [clone-front]
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Executing remote command
-        uses: appleboy/ssh-action@v0.1.4
-        with:
-          HOST: ${{ secrets.HOST }}
-          USERNAME: ${{ secrets.USERNAME }}
-          PORT: ${{ secrets.PORT }}
-          KEY: ${{ secrets.SSHKEY }}
-          script: >
-            cd /root/code/wa-static &&
+      - name: checkout + build
+        run: >
             chmod +x ./deploy-entrypoint-build.sh &&
             
             REACT_APP_API_URL=${{ secrets.CORS_URL }}
             ./deploy-entrypoint-build.sh
 
+      # - name: Copy repository contents via scp
+      #   uses: appleboy/scp-action@v0.1.4
+      #   env:
+      #     HOST: ${{ secrets.HOST }}
+      #     USERNAME: ${{ secrets.USERNAME }}
+      #     PORT: ${{ secrets.PORT }}
+      #     KEY: ${{ secrets.SSHKEY }}
+      #   with:
+      #     rm: true
+      #     overwrite: true
+      #     strip_components: 0
+      #     source: './*'
+      #     target: '/root/code/wa-static'
 
-  run-front:
-    name: Launch frontend static hosting
-    needs: [build-front]
-    runs-on: ubuntu-latest
+  # build-front:
+  #   name: Build frontend
+  #   needs: [clone-front]
+  #   runs-on: ubuntu-latest
 
-    steps:
-      - name: Executing remote command
-        uses: appleboy/ssh-action@v0.1.4
-        with:
-          HOST: ${{ secrets.HOST }}
-          USERNAME: ${{ secrets.USERNAME }}
-          PORT: ${{ secrets.PORT }}
-          KEY: ${{ secrets.SSHKEY }}
-          script: >
-            cd /root/code/wa-static &&
-            chmod +x ./deploy-entrypoint-build.sh &&
+  #   steps:
+  #     - name: Executing remote command
+  #       uses: appleboy/ssh-action@v0.1.4
+  #       with:
+  #         HOST: ${{ secrets.HOST }}
+  #         USERNAME: ${{ secrets.USERNAME }}
+  #         PORT: ${{ secrets.PORT }}
+  #         KEY: ${{ secrets.SSHKEY }}
+  #         script: >
+  #           cd /root/code/wa-static &&
+  #           chmod +x ./deploy-entrypoint-build.sh &&
             
-            VIRTUAL_HOST=${{ secrets.VIRTUAL_HOST }}
-            LETSENCRYPT_HOST=${{ secrets.LETSENCRYPT_HOST }}
-            ./deploy-entrypoint-run.sh
+  #           REACT_APP_API_URL=${{ secrets.CORS_URL }}
+  #           ./deploy-entrypoint-build.sh
+
+
+  # run-front:
+  #   name: Launch frontend static hosting
+  #   needs: [build-front]
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #     - name: Executing remote command
+  #       uses: appleboy/ssh-action@v0.1.4
+  #       with:
+  #         HOST: ${{ secrets.HOST }}
+  #         USERNAME: ${{ secrets.USERNAME }}
+  #         PORT: ${{ secrets.PORT }}
+  #         KEY: ${{ secrets.SSHKEY }}
+  #         script: >
+  #           cd /root/code/wa-static &&
+  #           chmod +x ./deploy-entrypoint-build.sh &&
+            
+  #           VIRTUAL_HOST=${{ secrets.VIRTUAL_HOST }}
+  #           LETSENCRYPT_HOST=${{ secrets.LETSENCRYPT_HOST }}
+  #           ./deploy-entrypoint-run.sh
 

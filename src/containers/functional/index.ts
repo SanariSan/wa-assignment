@@ -5,3 +5,4 @@ export * from './error-boundary-native';
 export * from './history-catcher';
 export * from './location-tracker';
 export * from './screen-details-tracker';
+export * from './helmet';

@@ -7,7 +7,7 @@ import { Router } from 'react-router-dom';
 import { PersistGate } from 'redux-persist/integration/react';
 import { App } from './app';
 import { Fonts, THEME } from './chakra-setup';
-import { GlobalHistoryCatcherContainer } from './containers/functional';
+import { GlobalHistoryCatcherContainer, HelmetContainer } from './containers/functional';
 import { ELOG_LEVEL } from './general.type';
 import './index.scss';
 import { setupLogListener } from './logging';
@@ -26,6 +26,7 @@ publishLog(ELOG_LEVEL.DEBUG, `REACT_APP_API_URL: ${process.env.REACT_APP_API_URL
 
 root.render(
   <React.StrictMode>
+    <HelmetContainer />
     <Provider store={Store}>
       <PersistGate loading={null} persistor={Persistor}>
         <ChakraProvider theme={THEME} resetCSS={true}>

@@ -9,7 +9,7 @@ export const Fonts = () => (
         font-style: normal;
         font-weight: 400;
         font-display: swap;
-        src: url('./fonts/Poppins-Regular.woff2') format('woff2');
+        src: url('./fonts/Poppins-Regular.woff') format('woff');
       }
       /* latin */
       @font-face {
