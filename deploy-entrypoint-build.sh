@@ -2,11 +2,11 @@
 
 cp ./prod.env ./.env;
 
-# local only
+# local vps only for cleanup purposes
 # docker container rm \
 #  -f $(docker ps -a -q --no-trunc --filter name=^/wa-static-front-build-container$) > /dev/null 2>&1;
 
-# local only
+# local vps only for cleanup purposes
 # docker run --detach --rm \
 #  -v "wa-static-front-build-volume:/data" busybox sh \
 #  -c "rm -rf /data/*";
