@@ -13,8 +13,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3.5.2
-      - name: checkout + build
+      - name: checkout
+        uses: actions/checkout@v3.5.2
+        with:
+          token: ${{ secrets.PAT }}
+      - name: build
         run: >
           chmod +x ./deploy-entrypoint-build.sh &&
           
