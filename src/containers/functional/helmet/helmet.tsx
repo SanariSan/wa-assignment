@@ -8,7 +8,7 @@ type THelmetContainer = {
 
 const HelmetContainer: FC<THelmetContainer> = () => (
   <Helmet>
-    <style type="text/css">{`${THEME_PREFERENCE_PRELOAD}`}</style>
+    {/* <style type="text/css">{`${THEME_PREFERENCE_PRELOAD}`}</style> */}
     <script>{`${GH_PAGES_ROUTING}`}</script>
     <meta name="description" content="github.com/SanariSan" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
