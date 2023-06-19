@@ -8,8 +8,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  clone-front:
-    name: Clone frontend from monorepo
+  clone-build-send-front:
+    name: Clone frontend from monorepo, build in docker, send to vps
     runs-on: ubuntu-latest
 
     steps:
@@ -19,7 +19,6 @@ jobs:
           chmod +x ./deploy-entrypoint-build.sh &&
           
           REACT_APP_API_URL=${{ secrets.CORS_URL }} ./deploy-entrypoint-build.sh
-
 
       - name: Copy repository contents via scp
         uses: appleboy/scp-action@v0.1.4
@@ -35,43 +34,23 @@ jobs:
           source: './*'
           target: '/root/code/wa-static'
 
-  # build-front:
-  #   name: Build frontend
-  #   needs: [clone-front]
-  #   runs-on: ubuntu-latest
+  run-host:
+    name: Launch frontend static hosting
+    needs: [clone-build-send-front]
+    runs-on: ubuntu-latest
 
-  #   steps:
-  #     - name: Executing remote command
-  #       uses: appleboy/ssh-action@v0.1.4
-  #       with:
-  #         HOST: ${{ secrets.HOST }}
-  #         USERNAME: ${{ secrets.USERNAME }}
-  #         PORT: ${{ secrets.PORT }}
-  #         KEY: ${{ secrets.SSHKEY }}
-  #         script: >
-  #           cd /root/code/wa-static &&
-  #           chmod +x ./deploy-entrypoint-build.sh &&
+    steps:
+      - name: Executing remote command
+        uses: appleboy/ssh-action@v0.1.4
+        with:
+          HOST: ${{ secrets.HOST }}
+          USERNAME: ${{ secrets.USERNAME }}
+          PORT: ${{ secrets.PORT }}
+          KEY: ${{ secrets.SSHKEY }}
+          script: >
+            cd /root/code/wa-static &&
+            chmod +x ./deploy-entrypoint-build.sh &&
 
-  #           REACT_APP_API_URL=${{ secrets.CORS_URL }}
-  #           ./deploy-entrypoint-build.sh
-
-  # run-front:
-  #   name: Launch frontend static hosting
-  #   needs: [build-front]
-  #   runs-on: ubuntu-latest
-
-  #   steps:
-  #     - name: Executing remote command
-  #       uses: appleboy/ssh-action@v0.1.4
-  #       with:
-  #         HOST: ${{ secrets.HOST }}
-  #         USERNAME: ${{ secrets.USERNAME }}
-  #         PORT: ${{ secrets.PORT }}
-  #         KEY: ${{ secrets.SSHKEY }}
-  #         script: >
-  #           cd /root/code/wa-static &&
-  #           chmod +x ./deploy-entrypoint-build.sh &&
-
-  #           VIRTUAL_HOST=${{ secrets.VIRTUAL_HOST }}
-  #           LETSENCRYPT_HOST=${{ secrets.LETSENCRYPT_HOST }}
-  #           ./deploy-entrypoint-run.sh
+            VIRTUAL_HOST=${{ secrets.VIRTUAL_HOST }}
+            LETSENCRYPT_HOST=${{ secrets.LETSENCRYPT_HOST }}
+            ./deploy-entrypoint-run.sh
