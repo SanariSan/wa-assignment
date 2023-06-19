@@ -16,24 +16,24 @@ jobs:
       - uses: actions/checkout@v3.5.2
       - name: checkout + build
         run: >
-            chmod +x ./deploy-entrypoint-build.sh &&
-            
-            REACT_APP_API_URL=${{ secrets.CORS_URL }}
-            ./deploy-entrypoint-build.sh
+          chmod +x ./deploy-entrypoint-build.sh &&
+          
+          REACT_APP_API_URL=${{ secrets.CORS_URL }} ./deploy-entrypoint-build.sh
 
-      # - name: Copy repository contents via scp
-      #   uses: appleboy/scp-action@v0.1.4
-      #   env:
-      #     HOST: ${{ secrets.HOST }}
-      #     USERNAME: ${{ secrets.USERNAME }}
-      #     PORT: ${{ secrets.PORT }}
-      #     KEY: ${{ secrets.SSHKEY }}
-      #   with:
-      #     rm: true
-      #     overwrite: true
-      #     strip_components: 0
-      #     source: './*'
-      #     target: '/root/code/wa-static'
+
+      - name: Copy repository contents via scp
+        uses: appleboy/scp-action@v0.1.4
+        env:
+          HOST: ${{ secrets.HOST }}
+          USERNAME: ${{ secrets.USERNAME }}
+          PORT: ${{ secrets.PORT }}
+          KEY: ${{ secrets.SSHKEY }}
+        with:
+          rm: true
+          overwrite: true
+          strip_components: 0
+          source: './*'
+          target: '/root/code/wa-static'
 
   # build-front:
   #   name: Build frontend
@@ -51,10 +51,9 @@ jobs:
   #         script: >
   #           cd /root/code/wa-static &&
   #           chmod +x ./deploy-entrypoint-build.sh &&
-            
+
   #           REACT_APP_API_URL=${{ secrets.CORS_URL }}
   #           ./deploy-entrypoint-build.sh
-
 
   # run-front:
   #   name: Launch frontend static hosting
@@ -72,8 +71,7 @@ jobs:
   #         script: >
   #           cd /root/code/wa-static &&
   #           chmod +x ./deploy-entrypoint-build.sh &&
-            
+
   #           VIRTUAL_HOST=${{ secrets.VIRTUAL_HOST }}
   #           LETSENCRYPT_HOST=${{ secrets.LETSENCRYPT_HOST }}
   #           ./deploy-entrypoint-run.sh
-

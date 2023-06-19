@@ -1,5 +1,7 @@
 #!/bin/bash
 
+docker run --detach --rm -v "$(pwd)/build-volume:/staging" -v "wa-static-front-build-volume:/prod" busybox sh -c "cp -rf /staging/* /prod";
+
 docker-compose --compatibility down > /dev/null 2>&1
 docker run --detach --rm -v vhost:/vhost_og busybox sh -c "{ echo 'client_max_body_size 25m;'; } > /vhost_og/${VIRTUAL_HOST}"
 docker-compose build

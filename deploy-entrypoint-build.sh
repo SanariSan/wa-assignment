@@ -16,6 +16,8 @@ if [ "$(docker ps -aqf "name=wa-static-front-build-container")" ]; then
     echo "Build completed (unknown if failed or succeeded)";
     docker run --detach --rm -v "wa-static-front-build-staging-volume:/staging" -v "wa-static-front-build-volume:/prod" busybox sh -c "cp -rf /staging/* /prod";
     echo "Applied staging build to production volume";
+    docker run --detach --rm -v "wa-static-front-build-volume:/prod" -v "$(pwd)/build-volume:/local" busybox sh -c "cp -rf /prod/* /local";
+    echo "Pulled files from production volume to local folder (build-volume)";
 fi
 
 exit
