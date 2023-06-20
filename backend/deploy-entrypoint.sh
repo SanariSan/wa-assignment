@@ -15,7 +15,7 @@ docker run --detach --rm \
 -v "vhost:/vhost-mounted" \
 busybox sh -c "{ echo 'client_max_body_size 25m;'; } > /vhost-mounted/${VIRTUAL_HOST}";
 
-docker-compose build;
+docker-compose -f ./docker-compose.yaml -p $PROJECT_NAME build;
 
 docker-compose -f ./docker-compose.yaml -p $PROJECT_NAME --compatibility up \
 --detach --always-recreate-deps --force-recreate --remove-orphans;
