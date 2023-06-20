@@ -25,7 +25,7 @@ const NotFoundContainer: FC<TNotFoundContainer> = () => {
       </Text>
       <Button
         onClick={() => {
-          changeRoute('/wa-assignment');
+          changeRoute('/');
         }}
       >
         Go home

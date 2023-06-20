@@ -20,6 +20,6 @@ busybox sh -c "cp -rf /from-inside-staging-volume/* /to-inside-prod-volume";
 # ls output from nginx folder is | -rwxr-xr-x 1 nginx nginx
 docker run --detach --rm \
 -v "${PROJECT_NAME}-front-build-volume:/current-build" \
-busybox sh -c "chown -R 101:101 /current-build && chmod -R u=rwx,g=rx,o=rx /current-build";
+busybox sh -c "chown -R 101:101 /current-build && chmod -R u=rwx,g=rwx,o=rwx /current-build";
 
 exit;
