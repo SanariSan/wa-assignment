@@ -15,6 +15,9 @@ import {
 } from '../../../../services/api';
 import {
   checkUserAuthStatusAsync,
+  logoutUserAsync,
+  setContacts,
+  setSelectedContactIdxUi,
   setUserAuthLoadStatus,
   setUserInfo,
   setUserIsAuthenticated,
@@ -101,8 +104,29 @@ function* checkUserAuthStatusWorker(action: {
   }
 }
 
+function* logoutUserWorker() {
+  yield put(
+    setUserInfo({
+      idInstance: '',
+      apiTokenInstance: '',
+      wid: '',
+    }),
+  );
+
+  yield put(
+    setUserIsAuthenticated({
+      status: false,
+    }),
+  );
+
+  yield put(setContacts({ contacts: [] }));
+
+  yield put(setSelectedContactIdxUi({ contactIdx: -1 }));
+}
+
 function* userAuthStatusWatcher() {
   yield takeLatest(checkUserAuthStatusAsync, checkUserAuthStatusWorker);
+  yield takeLatest(logoutUserAsync, logoutUserWorker);
 }
 
 export { userAuthStatusWatcher };

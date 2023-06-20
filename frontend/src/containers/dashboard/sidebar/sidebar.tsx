@@ -53,7 +53,14 @@ const SidebarContainer: FC<ISidebarContainer> = ({ sidebarToggleCb }) => {
   );
 
   return (
-    <Flex direction={'column'} alignItems={'flex-start'} gap={0} w={'100%'} h={'100%'}>
+    <Flex
+      direction={'column'}
+      alignItems={'flex-start'}
+      gap={0}
+      w={'100%'}
+      h={'100%'}
+      minW={'275px'}
+    >
       <Flex w={'100%'} h={'75px'} alignItems={'center'} justifyContent={'center'}>
         <SidebarSearchContainerMemo />
       </Flex>
