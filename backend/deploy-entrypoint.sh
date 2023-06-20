@@ -1,9 +1,11 @@
 #!/bin/bash
 
+PROJECT_NAME=wa-static;
+
 cp ./prod.env ./.env;
 
 # docker run --detach --rm \
-#  -v "wa-static-assets-volume:/assets_to" \
+#  -v "${PROJECT_NAME}-assets-volume:/assets_to" \
 #  -v "/$(pwd)/assets:/assets_from" \
 #  busybox sh -c "cp -rf /assets_from/* /assets_to"
 

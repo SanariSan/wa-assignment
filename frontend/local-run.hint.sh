@@ -1,2 +1,20 @@
-docker build --build-arg "REACT_APP_API_URL=http://localhost" --build-arg "REACT_APP_API_VERSION=v1" -t "wa-static-front-build-img" -f ./docker/build.Dockerfile .
-docker run -it --rm --name "wa-static-front-build-container" -v "wa-static-front-build-volume:/home/node/proj/build" wa-static-front-build-img  
+#!/bin/bash
+
+PROJECT_NAME=wa-static;
+
+docker run --rm \
+-v "${PROJECT_NAME}-front-build-volume:/old-build" \
+busybox sh -c "rm -rf /old-build/*";
+
+docker build \
+--build-arg "REACT_APP_API_URL=http://localhost" \
+--build-arg "REACT_APP_API_VERSION=v1" \
+-t "${PROJECT_NAME}-front-build-img" \
+-f ./docker/build.Dockerfile .;
+
+docker run -it --rm \
+--name "${PROJECT_NAME}-front-build-container" \
+-v "${PROJECT_NAME}-front-build-volume:/home/node/proj/build" \
+"${PROJECT_NAME}-front-build-img";
+
+exit;
