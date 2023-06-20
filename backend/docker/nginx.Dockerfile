@@ -16,5 +16,5 @@ CMD [\
 "/bin/bash", \
 "-c", \
 # chown mounted static dir to avoid permissions issues
-"chown -R 101:101 ${STATIC_PATH} ; chmod -R 755 ${STATIC_PATH} ; nginx -g \"daemon off;\"" \ 
+"chown -R 101:101 ${STATIC_PATH} ; nginx -g \"daemon off;\"" \ 
 ]

@@ -25,7 +25,7 @@ const FormControlContainer: FC<{
     if (formValues === undefined) return;
 
     Object.entries(formValues).forEach(([key, value]) => {
-      setFieldValue(key, value);
+      void setFieldValue(key, value);
     });
   }, [formValues, setFieldValue]);
 

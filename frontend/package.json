@@ -76,6 +76,7 @@
     "yup": "^1.1.1"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@redux-devtools/core": "^3.13.1",
     "@types/classnames": "^2.3.1",
     "@types/jsonwebtoken": "^8.5.9",
