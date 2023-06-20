@@ -4,7 +4,7 @@ PROJECT_NAME=wa-static;
 
 cp ./prod.env ./.env;
 
-docker-compose --compatibility down > /dev/null 2>&1;
+docker-compose -f ./docker-compose.yaml -p $PROJECT_NAME --compatibility down;
 
 # docker run --detach --rm \
 #  -v "${PROJECT_NAME}-backend-assets-volume:/assets_to" \
@@ -17,7 +17,7 @@ busybox sh -c "{ echo 'client_max_body_size 25m;'; } > /vhost-mounted/${VIRTUAL_
 
 docker-compose build;
 
-docker-compose -f ./docker-compose.yaml --compatibility up \
+docker-compose -f ./docker-compose.yaml -p $PROJECT_NAME --compatibility up \
 --detach --always-recreate-deps --force-recreate --remove-orphans;
 
 exit;
