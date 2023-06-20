@@ -1,9 +1,6 @@
 #!/bin/bash
 
-docker run --detach --rm \
--v "$(pwd)/build-volume:/from-local-folder" \
--v "wa-static-front-build-volume:/to-inside-volume" \
-busybox sh -c "cp -rf /from-local-folder/* /to-inside-volume";
+cp ./prod.env ./.env;
 
 # docker run --detach --rm \
 #  -v "wa-static-assets-volume:/assets_to" \

@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import { Helmet } from 'react-helmet';
-import { GH_PAGES_ROUTING, THEME_PREFERENCE_PRELOAD } from '../../../const';
+import { GH_PAGES_ROUTING } from '../../../const';
 
 type THelmetContainer = {
   [key: string]: unknown;
