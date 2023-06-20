@@ -8,11 +8,16 @@ busybox sh -c "rm -rf /old-build/*";
 
 docker run --detach --rm \
 -v "$(pwd)/build-volume:/from-local-folder" \
--v "${PROJECT_NAME}-front-build-volume:/to-inside-volume" \
+-v "${PROJECT_NAME}-front-build-staging-volume:/to-inside-volume" \
 busybox sh -c "cp -rf /from-local-folder/* /to-inside-volume";
 
 docker run --detach --rm \
--v "${PROJECT_NAME}-front-build-volume:/current-build" \
-busybox sh -c "chown -R 101:101 /current-build";
+-v "${PROJECT_NAME}-front-build-staging-volume:/from-inside-staging-volume" \
+-v "${PROJECT_NAME}-front-build-volume:/to-inside-prod-volume" \
+busybox sh -c "cp -rf /from-inside-staging-volume/* /to-inside-prod-volume";
+
+# docker run --detach --rm \
+# -v "${PROJECT_NAME}-front-build-volume:/current-build" \
+# busybox sh -c "chown -R 101:101 /current-build";
 
 exit;
