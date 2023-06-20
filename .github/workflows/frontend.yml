@@ -1,0 +1,63 @@
+name: Deploy frontend
+
+on:
+  push:
+    branches:
+      - vps-static
+      # - master
+    paths:
+      - "frontend/**"
+      - "**/frontend.yml"
+  workflow_dispatch:
+
+jobs:
+  clone-build-send-front:
+    name: Clone front, build in docker, send to vps
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3.5.2
+        with:
+          token: ${{ secrets.PAT }}
+
+      - name: Build
+        run: >
+          cd ./frontend &&
+          chmod +x ./deploy-entrypoint-build.sh &&
+
+          REACT_APP_API_URL=${{ secrets.CORS_URL }}
+          /bin/bash ./deploy-entrypoint-build.sh
+
+      - name: Scp send
+        uses: appleboy/scp-action@v0.1.4
+        env:
+          HOST: ${{ secrets.HOST }}
+          USERNAME: ${{ secrets.USERNAME }}
+          PORT: ${{ secrets.PORT }}
+          KEY: ${{ secrets.SSHKEY }}
+        with:
+          rm: true
+          overwrite: true
+          strip_components: 1
+          source: "./frontend/*"
+          target: "/root/code/wa-static/frontend"
+
+  apply-build-to-volume:
+    name: Apply front build to local volume
+    needs: [clone-build-send-front]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Apply front build to local volume
+        uses: appleboy/ssh-action@v0.1.4
+        with:
+          HOST: ${{ secrets.HOST }}
+          USERNAME: ${{ secrets.USERNAME }}
+          PORT: ${{ secrets.PORT }}
+          KEY: ${{ secrets.SSHKEY }}
+          script: >
+            cd /root/code/wa-static/frontend &&
+            chmod +x ./deploy-entrypoint-apply.sh &&
+
+            /bin/bash ./deploy-entrypoint-apply.sh

@@ -1,0 +1,57 @@
+name: Deploy backend
+
+on:
+  push:
+    branches:
+      - vps-static
+      # - master
+    paths:
+      - "backend/**"
+      - "**/backend.yml"
+  workflow_dispatch:
+
+jobs:
+  clone-send-backend:
+    name: Clone back, send to vps
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3.5.2
+        with:
+          token: ${{ secrets.PAT }}
+
+      - name: Scp send
+        uses: appleboy/scp-action@v0.1.4
+        env:
+          HOST: ${{ secrets.HOST }}
+          USERNAME: ${{ secrets.USERNAME }}
+          PORT: ${{ secrets.PORT }}
+          KEY: ${{ secrets.SSHKEY }}
+        with:
+          rm: true
+          overwrite: true
+          strip_components: 1
+          source: "./backend/*"
+          target: "/root/code/wa-static/backend"
+
+  launch-backend:
+    name: Launch backend
+    needs: [clone-send-backend]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Launch backend
+        uses: appleboy/ssh-action@v0.1.4
+        with:
+          HOST: ${{ secrets.HOST }}
+          USERNAME: ${{ secrets.USERNAME }}
+          PORT: ${{ secrets.PORT }}
+          KEY: ${{ secrets.SSHKEY }}
+          script: >
+            cd /root/code/wa-static/backend &&
+            chmod +x ./deploy-entrypoint.sh &&
+
+            VIRTUAL_HOST=${{ secrets.VIRTUAL_HOST }}
+            LETSENCRYPT_HOST=${{ secrets.LETSENCRYPT_HOST }}
+            /bin/bash ./deploy-entrypoint.sh

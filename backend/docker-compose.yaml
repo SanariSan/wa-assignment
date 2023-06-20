@@ -1,0 +1,40 @@
+version: '3.7'
+
+volumes:
+  wa-static-front-build-volume:
+    external: true
+  # wa-static-assets-volume:
+  #   external: true
+
+networks:
+  inbound:
+    name: inbound
+    external: true
+services:
+  wa_static_nginx:
+    container_name: wa_static_nginx
+    image: sanarisan/wa_static_nginx:1
+    restart: unless-stopped
+    build:
+      context: './'
+      dockerfile: './docker/nginx.Dockerfile'
+      args:
+        STATIC_PATH: '${STATIC_PATH}'
+    networks:
+      - default
+      - inbound
+    volumes:
+      - type: volume
+        source: wa-static-front-build-volume
+        target: '${STATIC_PATH}'
+      # - type: volume
+      # source: wa-static-assets-volume
+      # target: '${STATIC_PATH}/assets'
+    environment:
+      VIRTUAL_HOST: '${VIRTUAL_HOST}'
+      LETSENCRYPT_HOST: '${LETSENCRYPT_HOST}'
+      STATIC_PATH: '${STATIC_PATH}'
+    expose:
+      - '80'
+    # ports:
+    #   - '80:80'
