@@ -4,12 +4,12 @@ PROJECT_NAME=wa-static;
 
 cp ./prod.env ./.env;
 
+docker-compose --compatibility down > /dev/null 2>&1;
+
 # docker run --detach --rm \
-#  -v "${PROJECT_NAME}-assets-volume:/assets_to" \
+#  -v "${PROJECT_NAME}-backend-assets-volume:/assets_to" \
 #  -v "/$(pwd)/assets:/assets_from" \
 #  busybox sh -c "cp -rf /assets_from/* /assets_to"
-
-docker-compose --compatibility down > /dev/null 2>&1;
 
 docker run --detach --rm \
 -v "vhost:/vhost-mounted" \
