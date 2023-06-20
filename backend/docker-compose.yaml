@@ -26,7 +26,7 @@ services:
     volumes:
       - type: volume
         source: wa-static-front-build-volume
-        target: '${STATIC_PATH}'
+        target: '${STATIC_PATH}/wa-static'
       # - type: volume
       # source: wa-static-assets-volume
       # target: '${STATIC_PATH}/assets'

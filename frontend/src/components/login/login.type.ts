@@ -8,6 +8,7 @@ type TLogin = {
   [TKey in keyof TProps]: TProps[TKey];
 } & {
   isLoading: boolean;
+  onFillWithTemplate: () => void;
   handleSubmit: FormEventHandler<HTMLFormElement>;
 };
 

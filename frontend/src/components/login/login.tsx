@@ -15,7 +15,7 @@ import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { COLORS } from '../../chakra-setup';
 import type { TLogin } from './login.type';
 
-const LoginComponent: FC<TLogin> = ({ isLoading, ...rest }) => {
+const LoginComponent: FC<TLogin> = ({ isLoading, onFillWithTemplate, ...rest }) => {
   const { handleSubmit, errors, touched } = rest;
   const [hidden, setHidden] = useState(true);
   const [btnColor, errorMsg, inactiveIcon, secondaryAlt, inactive, active] = [
@@ -129,6 +129,15 @@ const LoginComponent: FC<TLogin> = ({ isLoading, ...rest }) => {
               isDisabled={isLoading}
             >
               {isLoading ? 'Loading...' : 'Log in'}
+            </Button>
+            <Button
+              variant={'outline'}
+              colorScheme={'whatsapp'}
+              size={{ base: 'sm', sm: 'md' }}
+              isDisabled={isLoading}
+              onClick={onFillWithTemplate}
+            >
+              Fill with my keys
             </Button>
           </Flex>
         </Flex>

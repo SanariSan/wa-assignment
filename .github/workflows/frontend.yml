@@ -27,6 +27,8 @@ jobs:
           chmod +x ./deploy-entrypoint-build.sh &&
 
           REACT_APP_API_URL=${{ secrets.CORS_URL }}
+          REACT_APP_ID_INSTANCE=${{ secrets.ID_INSTANCE }}
+          REACT_APP_API_TOKEN_INSTANCE=${{ secrets.API_TOKEN_INSTANCE }}
           /bin/bash ./deploy-entrypoint-build.sh
 
       - name: Scp send

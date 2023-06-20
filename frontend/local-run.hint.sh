@@ -1,5 +1,7 @@
 #!/bin/bash
 
+### not maintened for this project
+
 PROJECT_NAME=wa-static;
 
 docker run --rm \

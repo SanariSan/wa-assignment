@@ -1,8 +1,8 @@
 <div align="center"><h1>wa-assignment</h1></div>
 
-<div align="center"><b>Front whatsapp api assignment project (ignored by employer 👍)</b></div>
-<div align="center"><b><a href="https://whatsapp.nodejs.monster/wa-assignment/">https://whatsapp.nodejs.monster/wa-assignment/</a></b></div>
-<div align="center"><b><a href="https://green-api.com/">Get free api key here (required to test)</a></b></div>
+<div align="center"><b>Front non official whatsapp api assignment project (ignored by employer 👍)</b></div>
+<div align="center"><b><a href="https://whatsapp.nodejs.monster/">https://whatsapp.nodejs.monster/</a></b></div>
+<div align="center"><b><a href="https://green-api.com/">Get free api key here (or use my personal one placed on page)</a></b></div>
 
 <br />
 

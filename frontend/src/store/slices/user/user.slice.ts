@@ -18,7 +18,6 @@ const userSlice = createSlice({
     setUserIsAuthenticated(state, action: { payload: { status: TIsAuthenticated }; type: string }) {
       state.isAuthenticated = action.payload.status;
     },
-
     setUserInfo(state, action: { payload: Partial<TUserAuthInitState>; type: string }) {
       Object.entries(action.payload).forEach(([key, val]) => {
         state[key] = val;

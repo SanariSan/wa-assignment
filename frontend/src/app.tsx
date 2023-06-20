@@ -39,19 +39,13 @@ const App: FC = () => {
         bg={bg}
       >
         <Switch>
-          <Route exact path={'/wa-assignment'}>
-            <AuthenticatedAccessContainer
-              mustBe={'authenticated'}
-              redirectLocation={'/wa-assignment/login'}
-            >
+          <Route exact path={'/'}>
+            <AuthenticatedAccessContainer mustBe={'authenticated'} redirectLocation={'/login'}>
               <DashboardLayoutContainer />
             </AuthenticatedAccessContainer>
           </Route>
-          <Route exact path="/wa-assignment/login">
-            <AuthenticatedAccessContainer
-              mustBe={'unauthenticated'}
-              redirectLocation={'/wa-assignment'}
-            >
+          <Route exact path="/login">
+            <AuthenticatedAccessContainer mustBe={'unauthenticated'} redirectLocation={'/'}>
               <LoginContainer />
             </AuthenticatedAccessContainer>
           </Route>

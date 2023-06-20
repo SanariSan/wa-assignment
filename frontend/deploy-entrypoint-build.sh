@@ -15,6 +15,8 @@ cp ./prod.env ./.env;
 
 docker build \
 --build-arg "REACT_APP_API_URL=${REACT_APP_API_URL}" \
+--build-arg "REACT_APP_ID_INSTANCE=${REACT_APP_ID_INSTANCE}" \
+--build-arg "REACT_APP_API_TOKEN_INSTANCE=${REACT_APP_API_TOKEN_INSTANCE}" \
 -t "${PROJECT_NAME}-front-build-img" \
 -f ./docker/build.Dockerfile .;
 

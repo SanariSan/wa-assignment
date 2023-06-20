@@ -13,10 +13,17 @@ const LoginContainer: FC = () => {
   const userAuthLoadingState = useAppSelector(loadingUserAuthSelector);
   const dispatch = useAppDispatch();
 
-  const [formValues] = useState<TLoginFormValues>({
+  const [formValues, setFormValues] = useState<TLoginFormValues>({
     idInstance: '',
     apiTokenInstance: '',
   });
+
+  const fillWithTemplateCb = useCallback(() => {
+    setFormValues({
+      idInstance: process.env.REACT_APP_ID_INSTANCE,
+      apiTokenInstance: process.env.REACT_APP_API_TOKEN_INSTANCE,
+    });
+  }, []);
 
   const onSubmit = useCallback(
     (values: TLoginFormValues, actions: FormikHelpers<TLoginFormValues>) => {
@@ -40,8 +47,15 @@ const LoginContainer: FC = () => {
     >
       {(formikConfig) => (
         <>
-          <LoginComponent isLoading={userAuthLoadingState === 'loading'} {...formikConfig} />
-          <FormControlContainerMemo isLoading={userAuthLoadingState === 'loading'} />
+          <LoginComponent
+            isLoading={userAuthLoadingState === 'loading'}
+            onFillWithTemplate={fillWithTemplateCb}
+            {...formikConfig}
+          />
+          <FormControlContainerMemo
+            isLoading={userAuthLoadingState === 'loading'}
+            formValues={formValues}
+          />
         </>
       )}
     </Formik>

@@ -8,6 +8,15 @@ const contactsSlice = createSlice({
   name: 'contacts',
   initialState: CONTACTS_INIT_STATE,
   reducers: {
+    setContacts(
+      state,
+      action: {
+        payload: { contacts: TContacts };
+        type: string;
+      },
+    ) {
+      state.contacts = action.payload.contacts;
+    },
     pushContact(
       state,
       action: {
@@ -119,6 +128,7 @@ const contactsSlice = createSlice({
 
 const contacts = contactsSlice.reducer;
 const {
+  setContacts,
   pushChatHistory,
   sendMessageAsync,
   fetchChatHistoryAsync,
@@ -129,6 +139,7 @@ const {
 } = contactsSlice.actions;
 
 export {
+  setContacts,
   aknowledgeUpdateAsync,
   contacts,
   fetchChatHistoryAsync,
