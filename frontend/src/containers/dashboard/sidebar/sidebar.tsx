@@ -25,14 +25,13 @@ const SidebarContainer: FC<ISidebarContainer> = ({ sidebarToggleCb }) => {
   const lastMessages = useMemo(
     () =>
       contacts.map(({ chatHistory }) => {
-        if (
-          chatHistory.length > 0 &&
-          chatHistory.at(0)?.textMessage !== undefined &&
-          chatHistory.at(0)?.type !== undefined
-        ) {
+        if (chatHistory.length > 0 && chatHistory.at(0)?.type !== undefined) {
           type THistoryEntity = TContacts[number]['chatHistory'][number];
           const historyEntity = chatHistory.at(0) as THistoryEntity;
-          return { type: historyEntity.type, text: historyEntity.textMessage };
+          return {
+            type: historyEntity.type,
+            text: historyEntity.textMessage ?? '{Unsupported type}',
+          };
         }
 
         return {

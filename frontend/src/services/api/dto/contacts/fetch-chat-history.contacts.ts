@@ -14,7 +14,7 @@ const ContactsFetchChatHistoryIncomingSuccessDTO = array()
       type: string().required(),
       idMessage: string().required(),
       chatId: string().required(),
-      textMessage: string().required(),
+      textMessage: string().optional(),
       timestamp: number().integer().required(),
       typeMessage: string().optional(),
       senderId: string().optional(),

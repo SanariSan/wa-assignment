@@ -46,7 +46,7 @@ const ChatContainer: FC<TChatContainer> = () => {
           <ChatMessageComponentMemo
             key={`${type}-${idx}`}
             type={type}
-            textMessage={textMessage}
+            textMessage={textMessage ?? '{Unsupported type}'}
             time={time}
           />
         );

@@ -175,7 +175,7 @@ function* receiveUpdateWorker(action: { type: string }) {
       const textMessage =
         messageData.textMessageData?.textMessage ??
         messageData.extendedTextMessageData?.text ??
-        '{Error receiving text message, please contact developer}';
+        '{Unsupported type}';
 
       // notification cleanup
       yield put(aknowledgeUpdateAsync({ receiptId }));
