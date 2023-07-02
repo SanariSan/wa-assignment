@@ -22,7 +22,7 @@ const ContactsReceiveUpdateIncomingSuccessDTO = object({
       chatName: string().optional(),
       sender: string().required(), // WID of sender '1234567@c.us' OR 'urnums@c.us'
       senderName: string().optional(),
-    }).required('Missing sender info'),
+    }).optional(),
     messageData: object({
       typeMessage: string().optional(), // message here
       extendedTextMessageData: object({
@@ -31,7 +31,11 @@ const ContactsReceiveUpdateIncomingSuccessDTO = object({
       textMessageData: object({
         textMessage: string().required(), // OR message here...
       }).optional(),
-    }).required(),
+    }).optional(),
+    // when writing to account that does not exist these appear instead of senderData + messageData
+    // even though status notifications disabled :))))))))
+    chatId: string().optional(),
+    status: string().optional(),
   }),
 })
   .strict(true)

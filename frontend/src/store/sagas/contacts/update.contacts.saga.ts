@@ -152,16 +152,25 @@ function* receiveUpdateWorker(action: { type: string }) {
       // no updates
       if (fetchStatus.response.success === null) return;
 
+      const { receiptId, body } = fetchStatus.response.success;
+
+      // writing to account that does not exist (hotfix, this api is something...)
+      if (
+        body.messageData === undefined ||
+        body.senderData === undefined ||
+        body.status !== undefined
+      ) {
+        yield put(aknowledgeUpdateAsync({ receiptId }));
+        return;
+      }
+
       const {
-        receiptId,
-        body: {
-          timestamp,
-          typeWebhook,
-          senderData: { chatId },
-          idMessage,
-          messageData,
-        },
-      } = fetchStatus.response.success;
+        timestamp,
+        typeWebhook,
+        senderData: { chatId },
+        idMessage,
+        messageData,
+      } = body;
       const type = typeWebhook.includes('incoming') ? 'incoming' : 'outgoing';
       const textMessage =
         messageData.textMessageData?.textMessage ??
